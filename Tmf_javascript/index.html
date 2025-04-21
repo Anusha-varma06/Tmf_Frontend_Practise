@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script>
+        var emp1={
+            id:"1011",
+            firstName:"tim",
+            lastName:"berner lee",
+            designation:"team lead",
+            contact:"9087564327",
+            email:"lee@gmail.com"
+        };
+        var emp2={
+            id:"1012",
+            firstName:"charles",
+            lastName:"darwin",
+            designation:"manager",
+            contact:"73892982373",
+            email:"darwin@gmail.com"
+        };
+        var emp3={
+            id:"1013",
+            firstName:"david",
+            lastName:"warner",
+            designation:"hr",
+            contact:"7389298123",
+            email:"warner@gmail.com"
+        };
+        var empList=[emp1,emp2,emp3];
+        var filterList=[];
+        function onSearch(){
+            var searchId=document.getElementById("empId").value;
+            var searchDesg=document.getElementById("empDesig").value;
+            var  searchFirstName=document.getElementById("empFn").value;
+            var searchLastName=document.getElementById("empLn").value;
+            var searchContact=document.getElementById("empPhno").value;
+            var searchEmail=document.getElementById("empEmail").value;
+            onFilter(searchId,searchDesg,searchFirstName,searchLastName,searchContact,searchEmail);
+        };
+        function onFilter(searchId, searchDesg, searchFirstName, searchLastName, searchContact, searchEmail) {
+                        var empTableDiv = document.getElementById("empListTable");
+                        empTableDiv.innerHTML="";
+                        var empTable = document.createElement("table");
+                        var empTableAppend = empTableDiv.appendChild(empTable);
+                        empTableAppend.setAttribute("border", "1");
+                        var emptrhd = empTableAppend.appendChild(document.createElement("tr"));
+                        emptrhd.innerHTML = "<th>EmpId</th>  <th>EmpFirstName</th> <th>EmpLastName</th> <th>EmpDesignation</th> <th>EmpContact</th> <th>EmpEmail</th>";
+                for (i = 0; i < empList.length; i++) {
+                    if (searchId!="" && (searchId == empList[i].id || empList[i].id.includes(searchId)) ){
+                        filterList.push(empList[i]);
+                    }
+                    else if(searchDesg!="" && (searchDesg==empList[i].designation||empList[i].designation.includes(searchDesg)) ) {
+                        filterList.push(empList[i]);
+                    } 
+                    else if(searchFirstName!="" && (searchFirstName==empList[i].firstName||empList[i].firstName.includes(searchFirstName))){
+                        filterList.push(empList[i]);
+                    }
+                    else if(searchLastName!="" && (searchLastName==empList[i].lastName||empList[i].lastName.includes(searchLastName))){
+                        filterList.push(empList[i]);
+                    } 
+                    else if(searchContact!="" && (searchContact==empList[i].contact||empList[i].contact.includes(searchContact))){
+                        filterList.push(empList[i]);
+                    }  
+                    else if(searchEmail!="" && (searchEmail==empList[i].email||empList[i].email.includes(searchEmail))){
+                        filterList.push(empList[i]);
+                    }
+                    else{
+                        
+                    }
+                }
+              
+                if(filterList.length!=0){
+                    for (j = 0; j < filterList.length; j++) {
+                            var emptr = empTableAppend.appendChild(document.createElement("tr"));
+                            var empKeys = Object.keys(filterList[j]);
+                            for (k = 0; k < empKeys.length; k++) {
+                                var emptd = emptr.appendChild(document.createElement("td"));
+                                emptd.innerHTML = filterList[j][empKeys[k]];
+                            }
+                        }
+                }
+                else{
+                    var emptr = empTableAppend.appendChild(document.createElement("tr"));
+                    var emptd = emptr.appendChild(document.createElement("td"));
+                    emptd.setAttribute("colspan","6");
+                    emptd.style.textAlign="center";
+                    emptd.innerHTML="no data found/matched";
+                }
+                        
+                    }
+                function validateContact(){
+                    var phno=document.getElementById("empPhno").value;
+                    var num=/^\d{10}$/;
+                    if(!num.test(phno)){
+                        alert("Phone number must contain digits! \n phone number must be 10 digits");
+                    }
+                }
+                function validateFirstName(){
+                    var firstnm=document.getElementById("empFn").value;
+                    var num=/^(?=.\d)(?=.[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]).+$/;
+                    if(num.test(firstnm)){
+                        alert("First Name must contain only alphabets");
+                    }
+                }
+                function validateLastName(){
+                    var lastnm=document.getElementById("empLn").value;
+                    var num=/^[A-Za-z]{2,30}$/;
+                    if(!num.test(lastnm)){
+                        alert("Last Name must contain only alphabets");
+                    }
+                }      
+    </script>
+</head>
+<body>
+    <h1>Search Employee</h1>
+    <table>
+        <tr>
+            <td>Employee Id:</td><td><input type="text" id="empId" name="demo" placeholder="Enter employee id"/></td>
+            <td>Employee Designation:</td><td><input type="text" id="empDesig" name="demo" placeholder="Enter Employee designation"/></td>
+        </tr>
+        <tr>
+            <td>Employee first name:</td><td><input type="text" id="empFn" name="demo" placeholder="Enter employee firstname" onblur="validateFirstName()"/></td>
+            <td>Employee last name:</td><td><input type="text" id="empLn" name="demo" placeholder="Enter employee lastname" onblur="validateLastName()"/></td>
+        </tr>
+        <tr>
+            <td>Employee contact:</td><td><input type="text" id="empPhno" name="demo" placeholder="Enter employee phone number" onblur="validateContact()"/></td>
+            <td>Employee email:</td><td><input type="text" id="empEmail" name="demo" placeholder="Enter employee mail"/></td>
+        </tr>
+        <tr>
+            <td></td><td></td>
+            <td></td><td><button onclick="onSearch()">search</button></td>
+        </tr>
+    </table>
+    <div id="empListTable">
+
+    </div>
+</body>
+<script>
+    var empTableDiv=document.getElementById("empListTable");
+    var empTable=document.createElement("table");
+    var empTableAppend=empTableDiv.appendChild(empTable);
+    empTableAppend.setAttribute("border","1");
+    var emptrhd=empTableAppend.appendChild(document.createElement("tr"));
+    emptrhd.innerHTML="<th>EmpId</th> <th>EmpFirstName</th> <th>EmpLastName</th>  <th>EmpDesignation</th> <th>EmpContact</th> <th>EmpEmail</th>";
+    for(i=0;i<empList.length;i++){
+    var emptr=empTableAppend.appendChild(document.createElement("tr"));
+    var empKeys=Object.keys(empList[i]);
+        for(j=0;j<empKeys.length;j++){
+            var emptd=emptr.appendChild(document.createElement("td"));
+            emptd.innerHTML=empList[i][empKeys[j]];
+        }
+    }
+</script>
+</html>
