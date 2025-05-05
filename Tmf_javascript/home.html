@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@18/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"></script>
+</head>
+<body>
+    <h1>EMPLOYEE DETAILS</h1>
+    <div id="empListTable">
+
+    </div>
+</body>
+<script>
+    var emp1={
+            Id:"1011",
+            Name:"tim",
+            email:"lee@gmail.com",
+            age:"30"
+        };
+        var emp2={
+            Id:"1012",
+            Name:"charles",
+            email:"charles@gmail.com",
+            age:"32"
+        };
+        var emp3={
+            Id:"1013",
+            Name:"darwin",
+            email:"darwin@gmail.com",
+            age:"25"
+        };
+        var empList=[emp1,emp2,emp3];    
+    var empTableDiv=document.getElementById("empListTable");
+    var root=ReactDOM.createRoot(empTableDiv);
+    var row1=React.createElement("tr",{},React.createElement("th",{},"ID"),React.createElement("th",{},"NAME"),React.createElement("th",{},"EMAIL"),React.createElement("th",{},"AGE"));
+    var rowArray=[];
+    for(i=0;i<empList.length;i++){
+        rowArray[i]=React.createElement("tr",{},React.createElement("td",{},empList[i].Id),React.createElement("td",{},empList[i].Name),React.createElement("td",{},empList[i].email),React.createElement("td",{},empList[i].age));
+
+    }
+    var empTable=React.createElement("table",{border:1},row1,rowArray);
+    root.render(empTable);
+</script>
+</html>
